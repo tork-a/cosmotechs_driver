@@ -1,0 +1,13 @@
+# Goal
+float64[] positions
+duration min_duration
+float64[] max_velocities
+---
+# Result
+float64[] positions
+---
+# Feedback
+Header header
+float64[] positions
+float64[] velocities
+float64[] errors
