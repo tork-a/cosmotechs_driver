@@ -62,7 +62,7 @@ int main (int argc, char **argv)
   // Parameters
   n.param("board_id", board_id, 0);
 
-#if 0
+#if 1
   if (Pcio32hwCreate (board_id) == -1)
   {
     ROS_ERROR("Cannot initialize I/O board: %d\n", board_id);

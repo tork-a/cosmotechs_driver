@@ -1,4 +1,8 @@
 // header file of module pcpg28iodrv.o
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
  
 #define OUT_P 	   1
 #define IN_P  	   12
@@ -179,5 +183,6 @@ typedef struct{
 	double			dSCurve[MAX_AXIS];
 } PCPG23I_SPD_PARAM, *pPCPG23I_SPD_PARAMS;
 
-
-
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */

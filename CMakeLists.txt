@@ -60,8 +60,8 @@ add_dependencies(pcio32ha_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPO
 add_dependencies(pcpg23i_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(pcio32ha_node ${catkin_LIBRARIES})
-target_link_libraries(pcpg23i_node ${catkin_LIBRARIES})
+target_link_libraries(pcio32ha_node ${catkin_LIBRARIES} ${PROJECT_SOURCE_DIR}/lib/libPcio32ha.so)
+target_link_libraries(pcpg23i_node ${catkin_LIBRARIES} ${PROJECT_SOURCE_DIR}/lib/libPcpg23i.so)
 
 #############
 ## Install ##

@@ -1,4 +1,9 @@
 // header file of module pcidrv.o 
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 #define OUT_P 	   1
 //#define IN_P  	   2
 #define IN_P  	   12
@@ -84,3 +89,7 @@ int Pcio32hwInPortDW( unsigned short wBsn,unsigned long *pdwData);
 int Pcio32hwOutPortDW( unsigned short wBsn,unsigned long dwData);
 int Pcio32hwInPortBit( unsigned short wBsn,unsigned char wBit,unsigned char *pbONOFF);
 int Pcio32hwOutPortBit( unsigned short wBsn,unsigned char wBit,unsigned char bONOFF);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
