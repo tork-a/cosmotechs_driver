@@ -1,7 +1,12 @@
 <launch>
-  <node name="pcpg23i_node" pkg="cosmotechs_driver" type="pcpg23i_node"/>
-  <node name="pcio32ha_node" pkg="cosmotechs_driver" type="pcio32ha_node"/>
+  <node name="pcpg23i_node" pkg="cosmotechs_driver" type="pcpg23i_node" output="screen">
+    <param name="loopback" value="true"/>
+  </node>
 
+  <node name="pcio32ha_node" pkg="cosmotechs_driver" type="pcio32ha_node" output="screen">
+    <param name="loopback" value="true"/>
+  </node>
   <test test-name="test_pcpg23i" pkg="cosmotechs_driver" type="test_pcpg23i.py" time-limit="1000"/>
+
   <test test-name="test_pcio32ha" pkg="cosmotechs_driver" type="test_pcio32ha.py" time-limit="1000"/>
 </launch>
