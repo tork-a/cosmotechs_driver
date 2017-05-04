@@ -87,6 +87,23 @@ int main (int argc, char **argv)
       return -1;
     }
   }
+  // ボード情報を表示
+  pciresource res;
+  Pcio32hwGetResource(board_id, &res);
+  ROS_INFO("bus: %d", res.bus);
+  ROS_INFO("dev: %d", res.dev);
+  ROS_INFO("func: %d", res.func);
+  ROS_INFO("baseclass: %d", res.baseclass);
+  ROS_INFO("subclass: %d", res.subclass);
+  ROS_INFO("programif: %d", res.programif);
+  ROS_INFO("revision: %d", res.revision);
+  ROS_INFO("irq: %d", res.irq);
+  ROS_INFO("Bsn: %d", res.Bsn);
+  ROS_INFO("mem_base: %x", res.Mem_base);
+  ROS_INFO("Io_base: %x", res.Io_base);
+  //return 0;
+
+
   ros::ServiceServer s_get_port = n.advertiseService ("get_port", GetPort);
   ros::ServiceServer s_set_port = n.advertiseService ("set_port", SetPort);
   ros::ServiceServer s_get_port_bit = n.advertiseService ("get_port_bit", GetPortBit);

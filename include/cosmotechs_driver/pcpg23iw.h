@@ -23,7 +23,7 @@ typedef unsigned short WORD;
 typedef unsigned short* PWORD;
 typedef unsigned long DWORD;
 typedef unsigned long* PDWORD;
-typedef pciresource PPCPG23IR;
+typedef pciresource* PPCPG23IR;
 
 BOOL Pcpg23iwDllOpen();
 BOOL Pcpg23iwDllClose();

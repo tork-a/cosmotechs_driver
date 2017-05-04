@@ -57,7 +57,21 @@ void execute (const cosmotechs_driver::MultiJointPositionGoalConstPtr & goal, Se
     if (!g_loopback)
     {
       // Preset Pulse Drive: p.85 in Reference Manual
-      Pcpg23iwDataFullWrite (board_id, axis, PCPG23I_PLUS_PRESET_PULSE_DRIVE, goal->positions[axis]);
+      if (goal->positions[axis] > 0) 
+	{
+	  Pcpg23iwDataFullWrite (board_id, axis,
+				 PCPG23I_PLUS_PRESET_PULSE_DRIVE,
+				 fabs(goal->positions[axis]));
+	}
+      else
+	{
+	  Pcpg23iwDataFullWrite (board_id, axis,
+				 PCPG23I_MINUS_PRESET_PULSE_DRIVE,
+				 fabs(goal->positions[axis]));
+	}
+      //Pcpg23iwDataFullWrite (board_id, axis,
+      //PCPG23I_PRESET_PULSE_DATA_OVERRIDE,
+      //goal->positions[axis]);
     }
   }
   if (sync_flag)
@@ -72,7 +86,7 @@ void execute (const cosmotechs_driver::MultiJointPositionGoalConstPtr & goal, Se
   {
     // Check the end of motion
     // p.42 in Software Manual
-    // ROS_INFO("counter: %d\n", counter);
+    ROS_INFO("counter: %d\n", counter);
     unsigned char bSts = 0;
     if (!g_loopback)
     {
@@ -102,6 +116,12 @@ void execute (const cosmotechs_driver::MultiJointPositionGoalConstPtr & goal, Se
     {
       ROS_INFO ("pcpg23i: preempted");
       // set the action state to preempted
+      // 通常停止はこれ
+      for (int axis=0; axis<2; axis++)
+	{
+	  Pcpg23iwSlowStop(board_id, axis);
+	}
+      
       as->setPreempted ();
       break;
     }
@@ -111,9 +131,9 @@ void execute (const cosmotechs_driver::MultiJointPositionGoalConstPtr & goal, Se
       if (!g_loopback)
       {
         // Internal Counter Read: P.83 in Reference Manual
-        Pcpg23iwDataFullRead (board_id, i, PCPG23I_INTERNAL_COUNTER_READ, &dwData);
-        // Pcpg23iwGetInternalCounter(board_id, i, &dwData);
-        ROS_INFO ("Internal Counter=%lu\n", dwData);
+        //Pcpg23iwDataFullRead (board_id, i, PCPG23I_INTERNAL_COUNTER_READ, &dwData);
+        Pcpg23iwGetInternalCounter(board_id, i, &dwData);
+        ROS_INFO ("Internal counter=%d\n", dwData);
         feedback.positions[i] = dwData;
         Pcpg23iwGetNowSpeedData(board_id, i, &wData);
         feedback.velocities[i] = wData;
@@ -140,8 +160,7 @@ int main (int argc, char **argv)
 
   // Parameters
   n.param ("loopback", g_loopback, false);
-  n.param ("board_id", board_id, 1);
-  // n.param<uint8_t&>("board_id", board_id, (uint8_t)0);
+  n.param ("board_id", board_id, 0);
   n.param ("sync", sync_flag, true);
   
   if (!g_loopback)
@@ -153,7 +172,20 @@ int main (int argc, char **argv)
     }
   }
   // ボード情報を表示
-  // Pcpg23iwGetResource()
+  pciresource res;
+  Pcpg23iwGetResource(board_id, &res);
+  ROS_INFO("bus: %d", res.bus);
+  ROS_INFO("dev: %d", res.dev);
+  ROS_INFO("func: %d", res.func);
+  ROS_INFO("baseclass: %d", res.baseclass);
+  ROS_INFO("subclass: %d", res.subclass);
+  ROS_INFO("programif: %d", res.programif);
+  ROS_INFO("revision: %d", res.revision);
+  ROS_INFO("irq: %d", res.irq);
+  ROS_INFO("Bsn: %d", res.Bsn);
+  ROS_INFO("mem_base: %x", res.Mem_base);
+  ROS_INFO("Io_base: %x", res.Io_base);
+  // return 0;
 
   // エラー情報の取得はこれ
   //   Pcpg23iwGetLastError()
