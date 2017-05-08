@@ -10,6 +10,13 @@ The supported products are:
 
 # Quick start with the test bed
 
+## Install drivers
+
+```
+$ roscd cosmotechs_driver/script
+$ sudo ./install.sh
+```
+
 ## pcpg23i_node
 
 Start the launch file as:
