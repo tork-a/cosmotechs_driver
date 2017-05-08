@@ -1,0 +1,10 @@
+<launch>
+  <!-- loop-back mode without hardware -->
+  <arg name="loopback" default="false"/>
+  <arg name="board_id" default="0"/>
+
+  <node name="pcio32ha_node" pkg="cosmotechs_driver" type="pcio32ha_node" output="screen">
+    <param name="loopback" value="$(arg loopback)"/>
+    <param name="board_id" value="$(arg board_id)"/>
+  </node>
+</launch>
