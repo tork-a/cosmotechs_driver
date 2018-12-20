@@ -1,0 +1,7 @@
+# port_id: ID number of port to set data
+uint8 port_id
+# bit: bit no [0:7]
+uint8 bit
+---
+# data: 0 or 1
+uint8 data

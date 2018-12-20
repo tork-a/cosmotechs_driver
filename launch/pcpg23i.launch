@@ -1,0 +1,12 @@
+<launch>
+  <!-- loop-back mode without hardware -->
+  <arg name="loopback" default="false"/>
+  <arg name="pulse_per_round" default="50000"/>
+  <arg name="acc_time" default="0.2"/>
+
+  <node name="pcpg23i_node" pkg="cosmotechs_driver" type="pcpg23i_node" output="screen">
+    <param name="loopback" value="$(arg loopback)"/>
+    <param name="pulse_per_round" value="$(arg pulse_per_round)"/>
+    <param name="acc_time" value="$(arg acc_time)"/>
+  </node>
+</launch>
